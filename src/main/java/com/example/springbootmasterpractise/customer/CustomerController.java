@@ -1,5 +1,6 @@
 package com.example.springbootmasterpractise.customer;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +16,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<Customer> getCustomer(CustomerService customerService){
+    public List<Customer> getCustomer(){
         return customerService.getCustomers();
     }
 }

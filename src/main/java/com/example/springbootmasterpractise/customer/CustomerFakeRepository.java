@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-@Primary
+//@Primary
 public class CustomerFakeRepository implements CustomerRepo{
     @Override
     public List<Customer> getCustomers() {
