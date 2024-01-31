@@ -1,25 +1,29 @@
 package com.example.springbootmasterpractise.customer;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping(path = "api/v1/customer")
+@RequestMapping(path = "api/v2/customer")
 @RestController
-@Deprecated
-public class CustomerController {
+public class CustomerControllerV2 {
 
     private final CustomerService customerService;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerControllerV2(CustomerService customerService) {
         this.customerService = customerService;
     }
 
     @GetMapping(value = "all")
-    public List<Customer> getCustomer(){
+    public List<Customer> getCustomers(){
         return customerService.getCustomers();
     }
+
+    @GetMapping(path = "{id}")
+    Customer getCustomer(@PathVariable("id") Long id){
+        return customerService.getCustomer(id);
+    }
+
 
     @PostMapping
     void createNewCustomer(@RequestBody Customer customer){
