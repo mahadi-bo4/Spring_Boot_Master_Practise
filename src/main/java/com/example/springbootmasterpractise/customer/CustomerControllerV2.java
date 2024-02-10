@@ -1,15 +1,19 @@
 package com.example.springbootmasterpractise.customer;
 
-import com.example.springbootmasterpractise.exceptions.ApiExceptionHandler;
 import com.example.springbootmasterpractise.exceptions.ApiRequestException;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping(path = "api/v2/customer")
 @RestController
 public class CustomerControllerV2 {
+
+    private final static Logger log = LoggerFactory.getLogger(CustomerControllerV2.class);
 
     private final CustomerService customerService;
 
@@ -24,6 +28,7 @@ public class CustomerControllerV2 {
 
     @GetMapping(path = "{id}")
     Customer getCustomer(@PathVariable("id") Long id){
+        log.info("Inside getCustomer()");
         return customerService.getCustomer(id);
     }
 

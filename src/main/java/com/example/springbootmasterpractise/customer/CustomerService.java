@@ -1,14 +1,17 @@
 package com.example.springbootmasterpractise.customer;
 
 import com.example.springbootmasterpractise.exceptions.NotFoundException;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
+
+    private final static Logger log = LoggerFactory.getLogger(CustomerService.class);
 
     private final CustomerRepo customerRepo;
 
@@ -19,14 +22,16 @@ public class CustomerService {
 
 
     public List<Customer> getCustomers(){
-        return customerRepo.getCustomers();
+        return customerRepo.findAll();
     }
 
     Customer getCustomer(Long id){
-        return getCustomers()
-                .stream()
-                .filter(customer -> customer.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException("Customer not found " + id));
+        return customerRepo
+                .findById(id)
+                .orElseThrow(() -> {
+                    NotFoundException notFoundException = new NotFoundException("Customer with id "+ id +" Not Found");
+                    log.error("Error in getting {}", id, notFoundException);
+                    return notFoundException;
+                });
     }
 }
